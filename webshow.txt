@@ -1,0 +1,29 @@
+http://mis-common:8889/reports/rwservlet?report=c:\sasi\report.jsp&userid=scott/tiger@olis&destype=cache&desformat=pdf&PARAMFORM=YES
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ select in_header.custcode,custname,add1,add2,pin,
+ in_header.invno,invdt,totstax,totsurch,
+ stk_master.itmcode,item_master1.itmname,unitname,itmprice,price,qty,stax,surcharge,totvalue
+ from in_header,in_detail,cust_master,item_master1,stk_master
+ where in_header.custcode = cust_master.custcode and
+ in_header.invno = in_detail.invno and
+ invdt = in_header.invdt and
+ stk_master.itmcode = in_detail.itmcode and
+ item_master1.itmname = item_master1.itmname ;
+
+
+
+
+http://mis-common:8889/reports/rwservlet?report=c:\sasi\report.jsp&userid=scott/tiger@olis&destype=cache&desformat=pdf&PARAMFORM=YES

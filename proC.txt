@@ -1,0 +1,60 @@
+#include <stdio>
+#include <ctype.h>
+
+Exec SQL BEGIN DECLARE SECTION;
+
+   char uid[40];
+   char mename[25] , mjob[20] , mdt[20];
+   int msal , mempno , mdeptno;
+
+EXEC SQL END DECLARE SECTION;
+EXEC SQL INCLUDE SQLCA;
+
+FILE *pf;
+
+main(){
+   printf("\n ENTER USERNAME : \n");
+   printf("\n Eg : scott/tiger@sun \n");
+   scanf("%s",uid);
+   printf("\n spoll  filename is EMP.PRN \n"); 
+
+   fp = fopen("EMP.PRN","w");
+     if(fp == NULL){
+      printf("FILE OPENING ERROR");
+      exit(0);
+   } 
+}
+
+EXEC SQL CONNECT : uid;
+
+Error();
+
+EXEC SQL DECLARE cc cursor for select empno,ename,job,sal,deptno from emp order by empno;
+
+Error();
+
+EXEC SQL select to_char(sys date,'dd-mm-yyyy') into :mdt from dual;
+
+Error();
+
+fprintf(fp,"\n MADRAS FERTILIZERS LIMITED MANALI ChENNAI-68 REPORT DATE : %s ", mdt );
+fprintf(fp,"\n---------------------------------------------------------------------"); 
+fprintf(fp,"\n EMP-NO       NAME       JOB-TITLE        SALARY          DEPT-NO    ");
+fprintf(fp,"\n---------------------------------------------------------------------");
+
+while (1){
+   EXEC SQL fetch cc into :mempno , :mename , :mjob , :msal , :mdeptno ;
+   
+   if(sql.sqlcode == 1403){
+      exit(1);
+   }
+ 
+   fprintf(fp, "%04d %15s %15s %05d %02d \n",mepno,mename,mjobb,msal,mdeptno);
+}
+fclose(fp);
+}
+Error(){
+   if(sqlca.sqlcode != 0){
+      printf("Error NO : %d ---> %70s",sqlca.sqlcode ,sqlca.sqlerrm.sqlerrmc);
+   }
+}
